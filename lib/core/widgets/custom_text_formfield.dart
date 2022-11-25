@@ -13,6 +13,7 @@ class CustomTextFormField extends StatelessWidget {
   final String hintText;
   final IconData prefixIcon;
   final TextStyle? hintStyle;
+  final String? initialValue;
 
   const CustomTextFormField({
     Key? key,
@@ -23,6 +24,7 @@ class CustomTextFormField extends StatelessWidget {
     this.validator,
     this.controller,
     this.hintStyle,
+    this.initialValue,
     required this.obscureText,
     required this.hintText,
     required this.prefixIcon,
@@ -30,6 +32,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initialValue,
       obscureText: obscureText,
       controller: controller,
       validator: validator,

@@ -3,13 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noter/core/constants/routes/app_routes.dart';
-
-import '../constants/colors/app_color.dart';
 import '../utils/show_loading.dart';
 
 class AddClientController extends GetxController {
   late String name;
   late String surname;
+  late String details;
   late double credit;
   GlobalKey<FormState> formstate = GlobalKey<FormState>();
   CollectionReference clientRef =
@@ -24,17 +23,12 @@ class AddClientController extends GetxController {
           'name': name,
           'surname': surname,
           'credit': credit,
+          'details': details,
           'date': DateTime.now().toString(),
           'refId': FirebaseAuth.instance.currentUser!.uid,
           'payment': [],
         }).then(
           (value) {
-            Get.snackbar(
-              'Alert',
-              'please refresh the page to update your data',
-              colorText: AppColor.kButtonColor,
-              duration: const Duration(seconds: 5),
-            );
             Get.offAllNamed(AppRoute.homepage);
           },
         ).catchError(

@@ -3,9 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noter/core/constants/routes/app_routes.dart';
+import 'package:noter/core/utils/show_details.dart';
 import 'package:noter/models/client_model.dart';
 
 class HomePageController extends GetxController {
+  late dynamic addedDate;
   // Sign out
   signout() async {
     await FirebaseAuth.instance.signOut();
@@ -16,15 +18,24 @@ class HomePageController extends GetxController {
 // ! Navigation Function
   navToAdd() {
     Get.toNamed(AppRoute.addclient);
+    Get.delete<HomePageController>();
   }
 
-  navToView(String name, String surname, double credit, List payment) {
+  navToView(String name, String surname, double credit, List payment,
+      String details) {
     Get.toNamed(AppRoute.viewclient, arguments: {
       "name": name,
       "surname": surname,
       "credit": credit,
       "payment": payment,
+      "details": details,
     });
+    Get.delete<HomePageController>();
+  }
+
+  showDetailsDialog(
+      String name, String date, String details, BuildContext context) {
+    showDetails(name, date, details, context);
   }
 
   // ! Variable For Function Fetch Client
@@ -35,13 +46,13 @@ class HomePageController extends GetxController {
   User? currentUser = FirebaseAuth.instance.currentUser!;
   Future fetchClients() async {
     clientInstance.clear();
-    QuerySnapshot<Object?> clientQuery = await clientRef
-        .where('refId', isEqualTo: currentUser!.uid)
-        .get();
+    QuerySnapshot<Object?> clientQuery =
+        await clientRef.where('refId', isEqualTo: currentUser!.uid).get();
     clientDocs = clientQuery.docs;
     for (QueryDocumentSnapshot<Object?> client in clientDocs) {
       Map<String, dynamic> clientData = client.data() as Map<String, dynamic>;
       clientInstance.add(ClientModel.fromMap(clientData));
+
       update();
     }
   }

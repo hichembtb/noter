@@ -1,6 +1,7 @@
 class ClientModel {
   final String name;
   final String surname;
+  final String details;
   final String date;
   final String refId;
   final double credit;
@@ -13,6 +14,7 @@ class ClientModel {
     required this.refId,
     required this.credit,
     required this.payment,
+    required this.details,
   });
   factory ClientModel.fromMap(Map<String, dynamic> data) {
     return ClientModel(
@@ -22,6 +24,7 @@ class ClientModel {
       date: data['date'],
       refId: data['refId'],
       payment: data['payment'],
+      details: data['details'],
     );
   }
 }

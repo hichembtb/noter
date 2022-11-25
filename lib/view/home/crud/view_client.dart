@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noter/core/controllers/view_client_controller.dart';
+import 'package:noter/core/functions/validator.dart';
 import 'package:noter/core/utils/size_config.dart';
 import 'package:noter/core/widgets/custom_text_formfield.dart';
 import '../../../core/constants/colors/app_color.dart';
@@ -110,15 +111,7 @@ class ViewClient extends StatelessWidget {
                         onSaved: (value) {
                           viewClientController.newCredit = double.parse(value);
                         },
-                        validator: (value) {
-                          if (value!.length > 5) {
-                            return "too LONG!!! ";
-                          }
-                          if (value.isEmpty) {
-                            return "enter value ";
-                          }
-                          return null;
-                        },
+                        validator: (value) => validator(value!, 1, 7, ''),
                       ),
                     ),
                     const SizedBox(
@@ -134,15 +127,24 @@ class ViewClient extends StatelessWidget {
                         onSaved: (value) {
                           viewClientController.newPayment = double.parse(value);
                         },
-                        validator: (value) {
-                          if (value!.length > 5) {
-                            return "too LONG!!! ";
-                          }
-                          if (value.isEmpty) {
-                            return "enter value ";
-                          }
-                          return null;
+                        validator: (value) => validator(value!, 1, 7, ''),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: CustomTextFormField(
+                        initialValue: viewClientController.details,
+                        inputType: TextInputType.name,
+                        obscureText: false,
+                        hintText: 'add details to your client',
+                        prefixIcon: Icons.description_outlined,
+                        onSaved: (value) {
+                          viewClientController.details = value;
                         },
+                        validator: (value) => validator(value!, 10, 1000, ''),
                       ),
                     ),
                   ],

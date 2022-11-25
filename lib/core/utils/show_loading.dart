@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../constants/colors/app_color.dart';
 
 showLoading(context) {

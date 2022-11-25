@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:noter/core/constants/colors/app_color.dart';
 import 'package:noter/core/constants/routes/app_routes.dart';
 import 'package:noter/core/utils/show_loading.dart';
 
@@ -10,6 +9,7 @@ class ViewClientController extends GetxController {
 
   String? name;
   String? surname;
+  String? details;
   double? credit;
   double? newCredit;
   double? newPayment;
@@ -20,6 +20,7 @@ class ViewClientController extends GetxController {
     surname = Get.arguments['surname'];
     credit = Get.arguments['credit'];
     payment = Get.arguments['payment'];
+    details = Get.arguments['details'];
     super.onInit();
   }
 
@@ -45,16 +46,11 @@ class ViewClientController extends GetxController {
           List<QueryDocumentSnapshot<Object?>> clientDocs = clientQuery.docs;
           for (QueryDocumentSnapshot<Object?> client in clientDocs) {
             if (newCredit != 0) {
-              clientRef
-                  .doc(client.id)
-                  .update({"credit": credit + newCredit!}).whenComplete(
+              clientRef.doc(client.id).update({
+                "credit": credit + newCredit!,
+                "details": details,
+              }).whenComplete(
                 () {
-                  Get.snackbar(
-                    'Alert',
-                    'please refresh the page to update your data',
-                    colorText: AppColor.kButtonColor,
-                    duration: const Duration(seconds: 5),
-                  );
                   Get.offAllNamed(AppRoute.homepage);
                   Get.delete<ViewClientController>();
                 },
@@ -89,17 +85,14 @@ class ViewClientController extends GetxController {
             payment!.add(newPayment);
             clientRef.doc(client.id).update({
               "payment": payment,
+              "details": details,
             }).whenComplete(
               () {
-                clientRef
-                    .doc(client.id)
-                    .update({"credit": credit - newPayment!});
-                Get.snackbar(
-                  'Alert',
-                  'please refresh the page to update your data',
-                  colorText: AppColor.kButtonColor,
-                  duration: const Duration(seconds: 5),
-                );
+                clientRef.doc(client.id).update({
+                  "credit": credit - newPayment!,
+                  "details": details,
+                });
+
                 Get.offAllNamed(AppRoute.homepage);
                 Get.delete<ViewClientController>();
               },
