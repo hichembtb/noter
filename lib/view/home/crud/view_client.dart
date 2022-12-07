@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noter/core/controllers/view_client_controller.dart';
 import 'package:noter/core/functions/validator.dart';
-import 'package:noter/core/utils/size_config.dart';
+import 'package:noter/core/configuration/size_config.dart';
 import 'package:noter/core/widgets/custom_text_formfield.dart';
 import '../../../core/constants/colors/app_color.dart';
 

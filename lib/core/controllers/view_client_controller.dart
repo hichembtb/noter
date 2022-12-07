@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noter/core/constants/routes/app_routes.dart';
-import 'package:noter/core/utils/show_loading.dart';
+import '../services/loading_service.dart';
 
 class ViewClientController extends GetxController {
   GlobalKey<FormState> formstate = GlobalKey<FormState>();
@@ -33,7 +33,7 @@ class ViewClientController extends GetxController {
     if (formdata != null) {
       if (formdata.validate()) {
         formdata.save();
-        showLoading(context);
+        LoadingService().showLoading();
         if (newCredit == 0 && newPayment == 0) {
           Get.offAllNamed(AppRoute.homepage);
           Get.delete<ViewClientController>();
@@ -51,11 +51,13 @@ class ViewClientController extends GetxController {
                 "details": details,
               }).whenComplete(
                 () {
+                  LoadingService().dismissLoading();
                   Get.offAllNamed(AppRoute.homepage);
                   Get.delete<ViewClientController>();
                 },
               );
             } else {
+              LoadingService().dismissLoading();
               Get.offAllNamed(AppRoute.homepage);
               Get.delete<ViewClientController>();
             }
@@ -73,7 +75,7 @@ class ViewClientController extends GetxController {
     if (formdata != null) {
       if (formdata.validate()) {
         formdata.save();
-        showLoading(context);
+        LoadingService().showLoading();
         QuerySnapshot<Object?> clientQuery = await clientRef
             .where('name', isEqualTo: name)
             .where('surname', isEqualTo: surname)
@@ -92,12 +94,13 @@ class ViewClientController extends GetxController {
                   "credit": credit - newPayment!,
                   "details": details,
                 });
-
+                LoadingService().dismissLoading();
                 Get.offAllNamed(AppRoute.homepage);
                 Get.delete<ViewClientController>();
               },
             );
           } else {
+            LoadingService().dismissLoading();
             Get.offAllNamed(AppRoute.homepage);
             Get.delete<ViewClientController>();
           }

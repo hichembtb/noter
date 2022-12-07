@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:noter/core/constants/colors/app_color.dart';
 import 'package:noter/view/auth/login_screen.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: isLoged == true ? const HomePage() : const LoginScreen(),
       getPages: getPages,
+      builder: EasyLoading.init(),
     );
   }
 }

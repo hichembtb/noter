@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:noter/core/utils/size_config.dart';
+import 'package:noter/core/configuration/size_config.dart';
 import '../constants/colors/app_color.dart';
 
 showDetails(String name, String date, String details, context) {

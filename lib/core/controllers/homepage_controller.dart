@@ -44,6 +44,8 @@ class HomePageController extends GetxController {
   List<ClientModel> clientInstance = [];
   List<QueryDocumentSnapshot<Object?>> clientDocs = [];
   User? currentUser = FirebaseAuth.instance.currentUser!;
+
+  // ! Fetch Client Func
   Future fetchClients() async {
     clientInstance.clear();
     QuerySnapshot<Object?> clientQuery =

@@ -37,6 +37,7 @@ dependencies:
   firebase_storage: ^10.3.10
   flutter:
     sdk: flutter
+  flutter_easyloading: ^3.0.5
   get: ^4.6.5
   google_sign_in: ^5.4.2
 

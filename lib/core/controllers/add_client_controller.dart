@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noter/core/constants/routes/app_routes.dart';
-import '../utils/show_loading.dart';
+import 'package:noter/core/services/loading_service.dart';
 
 class AddClientController extends GetxController {
   late String name;
@@ -18,7 +18,7 @@ class AddClientController extends GetxController {
     if (formdata != null) {
       if (formdata.validate()) {
         formdata.save();
-        showLoading(context);
+        LoadingService().showLoading();
         await clientRef.add({
           'name': name,
           'surname': surname,
@@ -29,21 +29,12 @@ class AddClientController extends GetxController {
           'payment': [],
         }).then(
           (value) {
+            LoadingService().showSuccess("Client Added");
             Get.offAllNamed(AppRoute.homepage);
           },
         ).catchError(
           (error) {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: const Text("Internet Problem "),
-                  content: Container(
-                    height: 50,
-                  ),
-                );
-              },
-            );
+            LoadingService().showError("Internet Problem ");
           },
         );
       }

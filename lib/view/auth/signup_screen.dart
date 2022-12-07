@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noter/core/constants/images/app_images.dart';
 import 'package:noter/core/controllers/signup_controller.dart';
-import 'package:noter/core/utils/size_config.dart';
+import 'package:noter/core/configuration/size_config.dart';
 import 'package:noter/core/widgets/custom_main_button.dart';
 import 'package:noter/core/widgets/custom_text_formfield.dart';
 import '../../core/constants/colors/app_color.dart';
@@ -121,7 +121,7 @@ class SignUpScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   CustomMainButton(
                     onPressed: () {
-                      signUpController.signupAndNavigate(context);
+                      signUpController.signup(context);
                     },
                     actionText: 'SignUp',
                   )
